@@ -19,7 +19,7 @@ namespace PasswordManager
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             string input_username = loginUsername.Text;
             string input_password = loginPasswd.Text;
@@ -72,7 +72,7 @@ namespace PasswordManager
 
         }
 
-        private void btnCreate_Click(object sender, EventArgs e)
+        private void BtnCreate_Click(object sender, EventArgs e)
         {
             string input_username = loginUsername.Text;
             string input_password = loginPasswd.Text;
@@ -116,7 +116,7 @@ namespace PasswordManager
 
         }
 
-        private void activate_Buttons(object sender, EventArgs e)
+        private void Activate_Buttons(object sender, EventArgs e)
         {
             if (loginPasswd.Text.Length != 0 && loginUsername.Text.Length != 0)
             {

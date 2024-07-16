@@ -112,7 +112,7 @@
             this.btnAdd.TabIndex = 8;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // textPassword
             // 
@@ -122,7 +122,7 @@
             this.textPassword.Size = new System.Drawing.Size(100, 22);
             this.textPassword.TabIndex = 7;
             this.textPassword.UseSystemPasswordChar = true;
-            this.textPassword.TextChanged += new System.EventHandler(this.activate_addButton);
+            this.textPassword.TextChanged += new System.EventHandler(this.Activate_addButton);
             // 
             // textMail
             // 
@@ -261,7 +261,7 @@
             this.btnConfirmEdit.TabIndex = 8;
             this.btnConfirmEdit.Text = "Confirm Edit";
             this.btnConfirmEdit.UseVisualStyleBackColor = true;
-            this.btnConfirmEdit.Click += new System.EventHandler(this.btnConfirmEdit_Click);
+            this.btnConfirmEdit.Click += new System.EventHandler(this.BtnConfirmEdit_Click);
             // 
             // editPassword
             // 
@@ -269,7 +269,7 @@
             this.editPassword.Name = "editPassword";
             this.editPassword.Size = new System.Drawing.Size(100, 22);
             this.editPassword.TabIndex = 7;
-            this.editPassword.TextChanged += new System.EventHandler(this.activate_confirmEditButton);
+            this.editPassword.TextChanged += new System.EventHandler(this.Activate_confirmEditButton);
             // 
             // editMail
             // 
@@ -338,7 +338,7 @@
             this.btnCopy.TabIndex = 9;
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Visible = false;
-            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            this.btnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
             // 
             // btnEye
             // 
@@ -351,7 +351,7 @@
             this.btnEye.TabIndex = 8;
             this.btnEye.UseVisualStyleBackColor = true;
             this.btnEye.Visible = false;
-            this.btnEye.Click += new System.EventHandler(this.btnEye_Click);
+            this.btnEye.Click += new System.EventHandler(this.BtnEye_Click);
             // 
             // btnDown
             // 
@@ -363,7 +363,7 @@
             this.btnDown.TabIndex = 6;
             this.btnDown.UseVisualStyleBackColor = true;
             this.btnDown.Visible = false;
-            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
+            this.btnDown.Click += new System.EventHandler(this.BtnDown_Click);
             // 
             // btnUp
             // 
@@ -375,7 +375,7 @@
             this.btnUp.TabIndex = 7;
             this.btnUp.UseVisualStyleBackColor = true;
             this.btnUp.Visible = false;
-            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
+            this.btnUp.Click += new System.EventHandler(this.BtnUp_Click);
             // 
             // btnDelete
             // 
@@ -387,7 +387,7 @@
             this.btnDelete.TabIndex = 4;
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Visible = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // btnEdit
             // 
@@ -399,7 +399,7 @@
             this.btnEdit.TabIndex = 5;
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Visible = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // panel1
             // 
@@ -420,14 +420,14 @@
             this.btnSaveData.TabIndex = 2;
             this.btnSaveData.Text = "Save changes";
             this.btnSaveData.UseVisualStyleBackColor = true;
-            this.btnSaveData.Click += new System.EventHandler(this.btnSaveData_Click);
+            this.btnSaveData.Click += new System.EventHandler(this.BtnSaveData_Click);
             // 
             // toolTip1
             // 
             this.toolTip1.BackColor = System.Drawing.Color.Brown;
             this.toolTip1.ShowAlways = true;
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.ToolTip1_Popup);
             // 
             // MainForm
             // 
