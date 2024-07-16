@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
 
 namespace PasswordManager
 {
@@ -34,6 +26,24 @@ namespace PasswordManager
             listView1.SelectedIndexChanged += ListView1_SelectedIndexChanged;
         }
 
+        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnEye.Visible = !btnEye.Visible;
+            btnUp.Visible = !btnUp.Visible;
+            btnDown.Visible = !btnDown.Visible;
+            btnEdit.Visible = !btnEdit.Visible;
+            btnDelete.Visible = !btnDelete.Visible;
+            btnCopy.Visible = !btnCopy.Visible;
+
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var selectedAccount = listView1.SelectedItems[0];
+                var account = (Accounts)selectedAccount.Tag;
+                passwordVisibility = selectedAccount.SubItems[4].Text != account.Password ? false : true;
+                btnEye.Image = passwordVisibility ? Properties.Resources.eye_visible : Properties.Resources.eye_off;
+            }
+        }
+
         private void LoadData()
         {
             CurrentId = 0;
@@ -52,11 +62,9 @@ namespace PasswordManager
                     {
                         loaded_accounts.Add(account);
                     }
-
                 }
             }
             Update_ListView();
-
         }
 
         private void SaveData()
@@ -82,23 +90,7 @@ namespace PasswordManager
             LoadData();
         }
 
-        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            btnEye.Visible = !btnEye.Visible;
-            btnUp.Visible = !btnUp.Visible;
-            btnDown.Visible = !btnDown.Visible;
-            btnEdit.Visible = !btnEdit.Visible;
-            btnDelete.Visible = !btnDelete.Visible;
-            btnCopy.Visible = !btnCopy.Visible;
-
-            if (listView1.SelectedItems.Count > 0)
-            {
-                var selectedAccount = listView1.SelectedItems[0];
-                var account = (Accounts)selectedAccount.Tag;
-                passwordVisibility = selectedAccount.SubItems[4].Text != account.Password ? false : true;
-                btnEye.Image = passwordVisibility ? Properties.Resources.eye_visible : Properties.Resources.eye_off;
-            }
-        }
+        
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
@@ -120,11 +112,6 @@ namespace PasswordManager
             textPassword.Clear();
         }
 
-        private string MaskPassword(string password)
-        {
-            return new string('*', 10);
-        }
-
         private void Update_ListView()
         {
             listView1.Items.Clear();
@@ -141,6 +128,22 @@ namespace PasswordManager
                 listView1.Items.Add(element);
                 element.Font = new Font(element.Font, FontStyle.Regular);
             }
+        }
+        private string MaskPassword(string password)
+        {
+            return new string('*', 10);
+        }
+
+        private void InitializeTooltips()
+        {
+            toolTip1 = new ToolTip();
+            toolTip1.SetToolTip(btnCopy, "Copy the password to the clipboard");
+            toolTip1.SetToolTip(btnAdd, "Add new account");
+            toolTip1.SetToolTip(btnDelete, "Delete the selected account");
+            toolTip1.SetToolTip(btnEdit, "Edit the selected account");
+            toolTip1.SetToolTip(btnEye, "Show password");
+            toolTip1.SetToolTip(btnUp, "Move the selected account up");
+            toolTip1.SetToolTip(btnDown, "Move the selected account down");
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
@@ -238,7 +241,6 @@ namespace PasswordManager
             }
         }
 
-
         private void BtnEye_Click(object sender, EventArgs e)
         {
             var selectedAccount = listView1.SelectedItems[0];
@@ -250,18 +252,6 @@ namespace PasswordManager
 
             btnEye.Image = passwordVisibility ? Properties.Resources.eye_visible : Properties.Resources.eye_off;
 
-        }
-
-        private void InitializeTooltips()
-        {
-            toolTip1 = new ToolTip();
-            toolTip1.SetToolTip(btnCopy, "Copy the password to the clipboard");
-            toolTip1.SetToolTip(btnAdd, "Add new entry");
-            toolTip1.SetToolTip(btnDelete, "Delete the selected entry");
-            toolTip1.SetToolTip(btnEdit, "Edit the selected entry");
-            toolTip1.SetToolTip(btnEye, "Show password");
-            toolTip1.SetToolTip(btnUp, "Move the selected entry up");
-            toolTip1.SetToolTip(btnDown, "Move the selected entry down");
         }
 
         private void ToolTip1_Popup(object sender, PopupEventArgs e)
@@ -290,12 +280,6 @@ namespace PasswordManager
             }
         }
 
-
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
         private void Activate_confirmEditButton(object sender, EventArgs e)
         {
             btnConfirmEdit.Enabled = editPassword.Text.Length != 0;
@@ -303,6 +287,11 @@ namespace PasswordManager
         private void Activate_addButton(object sender, EventArgs e)
         {
             btnAdd.Enabled = textPassword.Text.Length != 0;
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
-using System.Windows.Forms;
 
 namespace PasswordManager
 {

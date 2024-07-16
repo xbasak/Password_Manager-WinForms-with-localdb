@@ -204,31 +204,31 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "ID";
-            this.columnHeader1.Width = 30;
+            this.columnHeader1.Width = 28;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Description";
             this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 220;
+            this.columnHeader2.Width = 218;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Username";
             this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader3.Width = 220;
+            this.columnHeader3.Width = 218;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Mail";
             this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader4.Width = 220;
+            this.columnHeader4.Width = 218;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "Password";
             this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader5.Width = 228;
+            this.columnHeader5.Width = 220;
             // 
             // groupBox2
             // 
@@ -434,7 +434,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SlateGray;
-            this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.ClientSize = new System.Drawing.Size(1180, 657);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnEye);
             this.Controls.Add(this.btnDown);
