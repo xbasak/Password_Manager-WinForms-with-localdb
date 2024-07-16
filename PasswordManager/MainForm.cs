@@ -144,6 +144,7 @@ namespace PasswordManager
             toolTip1.SetToolTip(btnEye, "Show password");
             toolTip1.SetToolTip(btnUp, "Move the selected account up");
             toolTip1.SetToolTip(btnDown, "Move the selected account down");
+            toolTip1.SetToolTip(profile_delete, "Delete your profile and all data");
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
@@ -289,6 +290,35 @@ namespace PasswordManager
             btnAdd.Enabled = textPassword.Text.Length != 0;
         }
 
+        private void Profile_delete_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to delete your profile and all data? This is an irreversible process!",
+                "Are you sure?", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question, 
+                MessageBoxDefaultButton.Button2);
+
+            if (result == DialogResult.Yes)
+            {
+                using (var context = new PasswordManagerContext())
+                {
+                    context.Database.ExecuteSqlCommand($"DELETE FROM Users WHERE UserId='{loggedUser.UserId}'");
+                }
+                Application.Restart();
+                Environment.Exit(0);
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to close the application? First, make sure you saved the changes you made. ", 
+                "Closing app", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();

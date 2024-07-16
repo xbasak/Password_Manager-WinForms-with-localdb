@@ -57,15 +57,16 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSaveData = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.profile_delete = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnEye = new System.Windows.Forms.Button();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSaveData = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -247,7 +248,7 @@
             this.groupBox2.Size = new System.Drawing.Size(280, 138);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Edit checked account";
+            this.groupBox2.Text = "Edit selected account";
             this.groupBox2.Visible = false;
             // 
             // btnConfirmEdit
@@ -328,6 +329,45 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Description";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnSaveData);
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Location = new System.Drawing.Point(24, 88);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1128, 552);
+            this.panel1.TabIndex = 10;
+            // 
+            // btnSaveData
+            // 
+            this.btnSaveData.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSaveData.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnSaveData.Location = new System.Drawing.Point(944, 72);
+            this.btnSaveData.Name = "btnSaveData";
+            this.btnSaveData.Size = new System.Drawing.Size(88, 39);
+            this.btnSaveData.TabIndex = 2;
+            this.btnSaveData.Text = "Save changes";
+            this.btnSaveData.UseVisualStyleBackColor = true;
+            this.btnSaveData.Click += new System.EventHandler(this.BtnSaveData_Click);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.BackColor = System.Drawing.Color.Brown;
+            this.toolTip1.ShowAlways = true;
+            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.ToolTip1_Popup);
+            // 
+            // profile_delete
+            // 
+            this.profile_delete.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.profile_delete.Image = global::PasswordManager.Properties.Resources.delete_profile;
+            this.profile_delete.Location = new System.Drawing.Point(1112, 32);
+            this.profile_delete.Name = "profile_delete";
+            this.profile_delete.Size = new System.Drawing.Size(40, 40);
+            this.profile_delete.TabIndex = 11;
+            this.profile_delete.UseVisualStyleBackColor = true;
+            this.profile_delete.Click += new System.EventHandler(this.Profile_delete_Click);
+            // 
             // btnCopy
             // 
             this.btnCopy.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -401,40 +441,13 @@
             this.btnEdit.Visible = false;
             this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btnSaveData);
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Location = new System.Drawing.Point(24, 88);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1128, 552);
-            this.panel1.TabIndex = 10;
-            // 
-            // btnSaveData
-            // 
-            this.btnSaveData.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSaveData.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnSaveData.Location = new System.Drawing.Point(944, 72);
-            this.btnSaveData.Name = "btnSaveData";
-            this.btnSaveData.Size = new System.Drawing.Size(88, 39);
-            this.btnSaveData.TabIndex = 2;
-            this.btnSaveData.Text = "Save changes";
-            this.btnSaveData.UseVisualStyleBackColor = true;
-            this.btnSaveData.Click += new System.EventHandler(this.BtnSaveData_Click);
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.BackColor = System.Drawing.Color.Brown;
-            this.toolTip1.ShowAlways = true;
-            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.ToolTip1_Popup);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SlateGray;
             this.ClientSize = new System.Drawing.Size(1180, 657);
+            this.Controls.Add(this.profile_delete);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnEye);
             this.Controls.Add(this.btnDown);
@@ -451,6 +464,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Password Manager";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -500,6 +514,7 @@
         private System.Windows.Forms.Panel panel1;
         public System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnSaveData;
+        private System.Windows.Forms.Button profile_delete;
     }
 }
 
