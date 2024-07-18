@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace PasswordManager
@@ -55,11 +58,15 @@ namespace PasswordManager
                 {
                     if (account.UserId == loggedUser.UserId)
                     {
+                        CurrentId++;
+                        account.AccountId = CurrentId;
                         account.Password = Encrypting.Decrypt(account.Password,userKey);
                         list_of_accounts.Add(account);
                     }
                     else
                     {
+                        CurrentId++;
+                        account.AccountId = CurrentId;
                         loaded_accounts.Add(account);
                     }
                 }
@@ -69,28 +76,31 @@ namespace PasswordManager
 
         private void SaveData()
         {
+            CurrentId = 0;
             using (var context = new PasswordManagerContext())
             {
 
                 var allAccounts = context.Accounts.ToList();
                 context.Accounts.RemoveRange(allAccounts);
-                context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Accounts', RESEED, 0);");
+                context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name='Accounts';");
                 foreach (var account in list_of_accounts)
                 {
+                    CurrentId++;
+                    account.AccountId = CurrentId;
                     account.Password = Encrypting.Encrypt(account.Password,userKey);
                     context.Accounts.Add(account);
                 }
                 foreach (var account in loaded_accounts)
                 {
+                    CurrentId++;
+                    account.AccountId = CurrentId;
                     context.Accounts.Add(account);
                 }
                 context.SaveChanges();
             }
-            MessageBox.Show("Changes saved!");
             LoadData();
         }
 
-        
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
@@ -110,41 +120,6 @@ namespace PasswordManager
             textUsername.Clear();
             textMail.Clear();
             textPassword.Clear();
-        }
-
-        private void Update_ListView()
-        {
-            listView1.Items.Clear();
-            int accId = 0;
-            foreach (var acc in list_of_accounts)
-            {
-                accId++;
-                var element = new ListViewItem(accId.ToString());
-                element.SubItems.Add(acc.Description);
-                element.SubItems.Add(acc.Username);
-                element.SubItems.Add(acc.Mail);
-                element.SubItems.Add(MaskPassword(acc.Password));
-                element.Tag = acc;
-                listView1.Items.Add(element);
-                element.Font = new Font(element.Font, FontStyle.Regular);
-            }
-        }
-        private string MaskPassword(string password)
-        {
-            return new string('*', 10);
-        }
-
-        private void InitializeTooltips()
-        {
-            toolTip1 = new ToolTip();
-            toolTip1.SetToolTip(btnCopy, "Copy the password to the clipboard");
-            toolTip1.SetToolTip(btnAdd, "Add new account");
-            toolTip1.SetToolTip(btnDelete, "Delete the selected account");
-            toolTip1.SetToolTip(btnEdit, "Edit the selected account");
-            toolTip1.SetToolTip(btnEye, "Show password");
-            toolTip1.SetToolTip(btnUp, "Move the selected account up");
-            toolTip1.SetToolTip(btnDown, "Move the selected account down");
-            toolTip1.SetToolTip(profile_delete, "Delete your profile and all data");
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
@@ -221,27 +196,6 @@ namespace PasswordManager
             }
         }
 
-        private void MoveItems(int direction)
-        {
-            var selectedAccount = listView1.SelectedItems[0];
-            int selectedIndex = selectedAccount.Index;
-            Accounts temp;
-            int temp2;
-            if (list_of_accounts[selectedIndex].AccountId > list_of_accounts[selectedIndex - direction].AccountId ||
-                list_of_accounts[selectedIndex].AccountId < list_of_accounts[selectedIndex - direction].AccountId)
-            {
-                temp = list_of_accounts[selectedAccount.Index];
-                list_of_accounts[selectedIndex] = list_of_accounts[selectedIndex - direction];
-                list_of_accounts[selectedIndex - direction] = temp;
-
-                temp2 = list_of_accounts[selectedIndex].AccountId;
-                list_of_accounts[selectedIndex].AccountId = list_of_accounts[selectedIndex - direction].AccountId;
-                list_of_accounts[selectedIndex - direction].AccountId = temp2;
-                Update_ListView();
-                listView1.Items[selectedIndex - direction].Selected = true;
-            }
-        }
-
         private void BtnEye_Click(object sender, EventArgs e)
         {
             var selectedAccount = listView1.SelectedItems[0];
@@ -252,11 +206,6 @@ namespace PasswordManager
             selectedAccount.SubItems[4].Text = passwordVisibility ? account.Password : MaskPassword(account.Password);
 
             btnEye.Image = passwordVisibility ? Properties.Resources.eye_visible : Properties.Resources.eye_off;
-
-        }
-
-        private void ToolTip1_Popup(object sender, PopupEventArgs e)
-        {
 
         }
 
@@ -279,7 +228,97 @@ namespace PasswordManager
             {
                 ListView1_SelectedIndexChanged(sender, e);
             }
+            MessageBox.Show("Changes saved!");
         }
+
+        private void Profile_delete_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to delete your profile and all data? This is an irreversible process!",
+                "Are you sure?",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+
+            if (result == DialogResult.Yes)
+            {
+                using (var context = new PasswordManagerContext())
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        context.Database.ExecuteSqlRaw($"DELETE FROM Accounts WHERE UserId='{loggedUser.UserId}'");
+
+                        context.Database.ExecuteSqlRaw($"DELETE FROM Users WHERE UserId='{loggedUser.UserId}'");
+
+                        transaction.Commit();
+
+                    }
+                }
+                Application.Restart();
+                //Environment.Exit(0);
+            }
+        }
+
+        private void Update_ListView()
+        {
+            listView1.Items.Clear();
+            int accId = 0;
+            foreach (var acc in list_of_accounts)
+            {
+                accId++;
+                var element = new ListViewItem(accId.ToString());
+                element.SubItems.Add(acc.Description);
+                element.SubItems.Add(acc.Username);
+                element.SubItems.Add(acc.Mail);
+                element.SubItems.Add(MaskPassword(acc.Password));
+                element.Tag = acc;
+                listView1.Items.Add(element);
+                element.Font = new Font(element.Font, FontStyle.Regular);
+            }
+        }
+        private string MaskPassword(string password)
+        {
+            return new string('*', 10);
+        }
+
+        private void InitializeTooltips()
+        {
+            toolTip1 = new ToolTip();
+            toolTip1.SetToolTip(btnCopy, "Copy the password to the clipboard");
+            toolTip1.SetToolTip(btnAdd, "Add new account");
+            toolTip1.SetToolTip(btnDelete, "Delete the selected account");
+            toolTip1.SetToolTip(btnEdit, "Edit the selected account");
+            toolTip1.SetToolTip(btnEye, "Show password");
+            toolTip1.SetToolTip(btnUp, "Move the selected account up");
+            toolTip1.SetToolTip(btnDown, "Move the selected account down");
+            toolTip1.SetToolTip(profile_delete, "Delete your profile and all data");
+        }
+
+        private void MoveItems(int direction)
+        {
+            var selectedAccount = listView1.SelectedItems[0];
+            int selectedIndex = selectedAccount.Index;
+            Accounts temp;
+            int temp2;
+            if (list_of_accounts[selectedIndex].AccountId > list_of_accounts[selectedIndex - direction].AccountId ||
+                list_of_accounts[selectedIndex].AccountId < list_of_accounts[selectedIndex - direction].AccountId)
+            {
+                temp = list_of_accounts[selectedAccount.Index];
+                list_of_accounts[selectedIndex] = list_of_accounts[selectedIndex - direction];
+                list_of_accounts[selectedIndex - direction] = temp;
+
+                temp2 = list_of_accounts[selectedIndex].AccountId;
+                list_of_accounts[selectedIndex].AccountId = list_of_accounts[selectedIndex - direction].AccountId;
+                list_of_accounts[selectedIndex - direction].AccountId = temp2;
+                Update_ListView();
+                listView1.Items[selectedIndex - direction].Selected = true;
+            }
+        }
+
+        private void ToolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
 
         private void Activate_confirmEditButton(object sender, EventArgs e)
         {
@@ -288,25 +327,6 @@ namespace PasswordManager
         private void Activate_addButton(object sender, EventArgs e)
         {
             btnAdd.Enabled = textPassword.Text.Length != 0;
-        }
-
-        private void Profile_delete_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete your profile and all data? This is an irreversible process!",
-                "Are you sure?", 
-                MessageBoxButtons.YesNo, 
-                MessageBoxIcon.Question, 
-                MessageBoxDefaultButton.Button2);
-
-            if (result == DialogResult.Yes)
-            {
-                using (var context = new PasswordManagerContext())
-                {
-                    context.Database.ExecuteSqlCommand($"DELETE FROM Users WHERE UserId='{loggedUser.UserId}'");
-                }
-                Application.Restart();
-                Environment.Exit(0);
-            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
