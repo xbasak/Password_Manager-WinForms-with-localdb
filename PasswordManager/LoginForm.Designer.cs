@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
-            this.title2 = new System.Windows.Forms.Label();
             this.loginUsername = new System.Windows.Forms.TextBox();
             this.loginPasswd = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
@@ -37,17 +36,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.loginPassword = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.title2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // title2
-            // 
-            this.title2.AutoSize = true;
-            this.title2.Font = new System.Drawing.Font("ROG Fonts", 21.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.title2.Location = new System.Drawing.Point(8, 48);
-            this.title2.Name = "title2";
-            this.title2.Size = new System.Drawing.Size(421, 35);
-            this.title2.TabIndex = 0;
-            this.title2.Text = "PASSWORD MANAGER";
             // 
             // loginUsername
             // 
@@ -121,6 +111,17 @@
             this.label2.Size = new System.Drawing.Size(266, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Create a local profile to store your data or log in to it  ";
+            // 
+            // title2
+            // 
+            this.title2.AutoSize = true;
+            this.title2.Font = new System.Drawing.Font("ROG Fonts", 21.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.title2.Image = global::PasswordManager.Properties.Resources.login_form;
+            this.title2.Location = new System.Drawing.Point(8, 48);
+            this.title2.Name = "title2";
+            this.title2.Size = new System.Drawing.Size(420, 35);
+            this.title2.TabIndex = 0;
+            this.title2.Text = "                                             ";
             // 
             // LoginForm
             // 

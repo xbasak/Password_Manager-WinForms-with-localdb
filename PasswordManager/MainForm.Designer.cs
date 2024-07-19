@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.title = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.textPassword = new System.Windows.Forms.TextBox();
@@ -67,21 +66,11 @@
             this.btnUp = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
+            this.title = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // title
-            // 
-            this.title.AutoSize = true;
-            this.title.Font = new System.Drawing.Font("ROG Fonts", 47.99999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.title.Location = new System.Drawing.Point(128, 8);
-            this.title.Name = "title";
-            this.title.Size = new System.Drawing.Size(931, 77);
-            this.title.TabIndex = 0;
-            this.title.Text = "PASSWORD MANAGER";
-            this.title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox1
             // 
@@ -440,6 +429,18 @@
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Visible = false;
             this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
+            // 
+            // title
+            // 
+            this.title.AutoSize = true;
+            this.title.Font = new System.Drawing.Font("ROG Fonts", 47.99999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.title.Image = global::PasswordManager.Properties.Resources.main_form;
+            this.title.Location = new System.Drawing.Point(128, 8);
+            this.title.Name = "title";
+            this.title.Size = new System.Drawing.Size(936, 77);
+            this.title.TabIndex = 0;
+            this.title.Text = "                                           ";
+            this.title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
